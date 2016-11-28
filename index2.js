@@ -15,6 +15,7 @@
   };
   firebase.initializeApp(config);
 
+
 //get elements
 const txtEmail=document.getElementById('txtEmail');
 const txtPassword=document.getElementById('txtPassword');
@@ -26,10 +27,10 @@ const btnLogout=document.getElementById('btnLogout');
 btnLogin.addEventListener('click',e=>{
 //Get email and pass
 const email=txtEmail.value;
-const pass=txtPassword.value;
+const password=txtPassword.value;
 const auth =firebase.auth();
 //sign in 
-const promise=auth.signInwithEmailandPassword(email,pass);
+const promise = auth.signInWithEmailAndPassword(email,password);
 promise.catch(e=>console.log(e.message));
 });
 
@@ -39,10 +40,10 @@ btnSignup.addEventListener('click',e=>{
 //Get email and pass
 //TODO:Check for REAL EMAIL
 const email=txtEmail.value;
-const pass=txtPassword.value;
+const password=txtPassword.value;
 const auth =firebase.auth();
 //sign in 
-const promise=auth.createUserwithEmailandPassword(email,pass);
+const promise= auth.createUserWithEmailAndPassword(email,password);
 promise.catch(e=>console.log(e.message));
 });
 
