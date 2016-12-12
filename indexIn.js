@@ -31,6 +31,7 @@ firebase.auth().signOut();
 firebase.auth().onAuthStateChanged(firebaseUser =>{
 	if(firebaseUser){
 		console.log(firebaseUser);
+		window.location.href = "Signed.html";
 		btnLogout.classList.remove('hide');
 		btnLogin.classList.add('hide');
 	}
