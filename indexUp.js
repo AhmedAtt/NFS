@@ -15,7 +15,6 @@ const txtEmailUp=document.getElementById('txtEmailUp');
 const txtPasswordUp=document.getElementById('txtPasswordUp');
 const txtPasswordUp2=document.getElementById('txtPasswordUp2');
 const btnSignup=document.getElementById('btnSignup');
-const btnLogout=document.getElementById('btnLogout');
 //signUpEvent
 btnSignup.addEventListener('click',e=>{
 const email=txtEmailUp.value;
@@ -32,19 +31,15 @@ const promise= auth.createUserWithEmailAndPassword(email,password);
 promise.catch(e=>console.log(e.message));
 }
 });
-//Logout
-btnLogout.addEventListener('click',e=>{
-firebase.auth().signOut();
-});
+
 firebase.auth().onAuthStateChanged(firebaseUser =>{
 	if(firebaseUser){
 		console.log(firebaseUser);
-		btnLogout.classList.remove('hide');
+		window.location.href = "Signed.html";
 		btnSignup.classList.add('hide');
 	}
 	else {
 		console.log('not logged in');
-		btnLogout.classList.add('hide');
 		btnSignup.classList.remove('hide');
 	}
 });
