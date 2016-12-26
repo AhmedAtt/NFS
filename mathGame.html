@@ -1,0 +1,179 @@
+<html>
+
+<head>
+    <title>MathGame</title>
+    <style>
+        .Game {
+            background-color: Teal;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            padding: 100px;
+            margin-top: -105px;
+            margin-left: -105px;
+        }
+
+        #game_body {
+            background-color: rgb(203, 226, 216);
+        }
+
+
+    </style>
+</head>
+
+<body id="game_body">
+    <div class="game">
+        <form>
+            <div>
+                <label id="lbl_op1">Test</label>
+                <label id="lbl_operation">+</label>
+                <label id="lbl_op2">Test</label>
+
+                <label id="lbl_equalSign">=</label>
+                <label id="lbl_result"></label>
+
+            </div>
+            <div>
+                <button type="button" class="game_button" name="button" id="btn_choice1">####</button>
+                <button type="button" class="game_button" name="button" id="btn_choice2">####</button><br>
+                <button type="button" class="game_button" name="button" id="btn_choice3">####</button>
+                <button type="button" class="game_button" name="button" id="btn_choice4">####</button>
+            </div>
+
+        </form>
+
+    </div>
+    <script type="text/javascript">
+        var op1 = Math.floor((Math.random() * 10 + 1));
+        document.getElementById('lbl_op1').innerHTML = op1;
+
+        var op2 = Math.floor((Math.random() * 10 + 1));
+        document.getElementById('lbl_op2').innerHTML = op2;
+
+
+        var opCode = Math.floor((Math.random() * 3 + 1));
+        var opSign;
+        switch (opCode) {
+            case 1:
+                opSign = '+';
+                break;
+            case 2:
+                opSign = '-';
+                break;
+            case 3:
+                opSign = '*';
+                break;
+
+            default:
+                opSign = '+';
+        }
+        document.getElementById('lbl_operation').innerHTML = opSign;
+        //Calculating Correct Value
+        var result = "";
+        switch (opCode) {
+            case 1:
+                result = op1 + op2;
+                break;
+            case 2:
+                result = op1 - op2;
+                break;
+            case 3:
+                result = op1 * op2;
+                break;
+        }
+        //Creating and Assigning buttons
+
+        var btnChoice = Math.floor((Math.random() * 4 + 1));
+        var visChoice = 0;
+        switch (btnChoice) {
+            case 1:
+                document.getElementById('btn_choice1').innerHTML = result;
+                visChoice = 1;
+                break;
+            case 2:
+                document.getElementById('btn_choice2').innerHTML = result;
+                visChoice = 2;
+                break;
+            case 3:
+                document.getElementById('btn_choice3').innerHTML = result;
+                visChoice = 3;
+                break;
+            case 4:
+                visChoice = 4;
+                document.getElementById('btn_choice4').innerHTML = result;
+                break;
+        }
+        var rand1 = Math.floor((Math.random() * 10 + 1)) + result;
+        var rand2 = result - Math.floor((Math.random() * 10 + 1));
+        var rand3 = Math.floor((Math.random() * 10 + 1)) + result;
+        console.log(visChoice);
+        switch (visChoice) {
+            case 1:
+                document.getElementById('btn_choice2').innerHTML = rand1
+                document.getElementById('btn_choice3').innerHTML = rand2;
+                document.getElementById('btn_choice4').innerHTML = rand3;
+                console.log("Hello1");
+                break;
+            case 2:
+                document.getElementById('btn_choice1').innerHTML = rand1
+                document.getElementById('btn_choice3').innerHTML = rand2;
+                document.getElementById('btn_choice4').innerHTML = rand3;
+                console.log("Hello2");
+                break;
+            case 3:
+                document.getElementById('btn_choice1').innerHTML = rand1
+                document.getElementById('btn_choice2').innerHTML = rand2;
+                document.getElementById('btn_choice4').innerHTML = rand3;
+                console.log("Hello3");
+                break;
+            case 4:
+                document.getElementById('btn_choice1').innerHTML = rand1
+                document.getElementById('btn_choice2').innerHTML = rand2;
+                document.getElementById('btn_choice3').innerHTML = rand3;
+                console.log("Hello4");
+
+
+                break;
+        }
+
+        document.getElementById('btn_choice1').onclick = function() {
+            document.getElementById('lbl_result').innerHTML = document.getElementById('btn_choice1').innerHTML;
+            if (result == document.getElementById('btn_choice1').innerHTML) {
+                alert("Correct");
+            } else {
+                alert("False");
+            }
+
+        }
+        document.getElementById('btn_choice2').onclick = function() {
+            document.getElementById('lbl_result').innerHTML = document.getElementById('btn_choice2').innerHTML;
+            if (result == document.getElementById('btn_choice2').innerHTML) {
+                alert("Correct");
+            } else {
+                alert("False");
+            }
+
+        }
+        document.getElementById('btn_choice3').onclick = function() {
+            document.getElementById('lbl_result').innerHTML = document.getElementById('btn_choice3').innerHTML;
+            if (result == document.getElementById('btn_choice3').innerHTML) {
+                alert("Correct");
+            } else {
+                alert("False");
+            }
+
+        }
+        document.getElementById('btn_choice4').onclick = function() {
+            document.getElementById('lbl_result').innerHTML = document.getElementById('btn_choice4').innerHTML;
+            if (result == document.getElementById('btn_choice4').innerHTML) {
+                alert("Correct");
+            } else {
+                alert("False");
+            }
+
+        }
+    </script>
+
+</body>
+
+</html>
