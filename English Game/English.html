@@ -26,7 +26,7 @@
 
 
 function ButtonAction(element){
-  var answer=Images[Rand_imageno].substring(0,Images[Rand_imageno].length-4);
+  var answer=Images[Rand_imageno].substring(0,Images[Rand_imageno].length-4); //4= number of choices
 
 if(element.innerHTML ==answer ){
   console.log("correct");
@@ -38,6 +38,7 @@ else{
 
 }
     Images.splice(Rand_imageno,1);
+    debugger;
     document.getElementById("Score").innerHTML="Score:"+Correct_Answer;
     NewSession();
 }
