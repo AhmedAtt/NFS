@@ -40,7 +40,7 @@ document.getElementById('pwerror').classList.add('hide'); //add pw mismatch
 const promise= auth.createUserWithEmailAndPassword(email,password);
 var profileRef = firebase.database().ref('Profiles'); //Create Profile object
 var profile = profileRef.child(fixEmail(email)); //Set Email as primary key
-profile.set({Email: email, Name: name, ScoreM: 0, ScoreE: 0 }); //Create paths inside profile
+profile.set({Email: email, Name: name, Age: "test", About: "test", Country: "test", ScoreM: 0, ScoreE: 0 }); //Create paths inside profile
 promise.catch(e=>console.log(e.message));
 }
 });
@@ -49,7 +49,7 @@ firebase.auth().onAuthStateChanged(firebaseUser =>{
 	if(firebaseUser){
 		console.log(firebaseUser);
 		window.location.href = "Signed.html";
-		btnSignup.classList.add('hide');+
+		btnSignup.classList.add('hide');
 	}
 	else {
 		console.log('not logged in');
