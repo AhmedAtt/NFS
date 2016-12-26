@@ -41,7 +41,7 @@
                 <button type="button" class="game_button" name="button" id="btn_choice4">####</button><br>
 
 
-                <button onclick="location.href='Signed.html';" type="button" name="button" id="btn_mainMenu">Main Menu</button>
+                <button type="button" name="button" id="btn_mainMenu">Main Menu</button>
 
             </div>
 
@@ -199,6 +199,10 @@
                 alert("Score : " + score);
             }
             generateQuestion();
+        }
+        document.getElementById('btn_mainMenu').onclick = function() {
+          var finalScore =result;
+          location.href='Signed.html';
         }
     </script>
 
