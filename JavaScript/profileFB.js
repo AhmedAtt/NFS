@@ -7,8 +7,6 @@
     storageBucket: "agile-30622.appspot.com",
     messagingSenderId: "592891433441"
   };
-  firebase.initializeApp(config);
-
 //make emails format compatible with firebase
 function fixEmail(email) {
   if (!email) return false
@@ -25,33 +23,45 @@ const country=document.getElementById("country");
 const scoreM=document.getElementById("score1");
 const scoreE=document.getElementById("score2");
 const btnBack=document.getElementById("btnBack");
-const key = fixEmail(firebase.auth().currentUser.email);
-
-function(){
-	name.innerHTML=
-	about.innerHTML=
-	age.innerHTML=
-	country.innerHTML=
-	scoreM.innerHTML=
-	scoreE.innerHTML=
-}
-
-btnBack.addEventListener('click', e=>{
-const name = name.value;
-const about = about.value;
-const age = age.value;
-const country = country.value;
 var profileRef = firebase.database().ref('Profiles'); //Create Profile object
-profileRef.child(key).child('Name').set(name);
-profileRef.child(key).child('About').set(about);
-profileRef.child(key).child('Age').set(age);
-profileRef.child(key).child('Country').set(country);
-});
-
 firebase.auth().onAuthStateChanged(firebaseUser =>{
 	if(firebaseUser){
 		console.log(firebaseUser);
-	}
+		const key = fixEmail(firebase.auth().currentUser.email);
+		profileRef.on("value",gotData,errData);
+ 		 function errData(error) {
+		  console.log("Something went wrong.");
+ 		 console.log(error);
+}
+  function gotData(data){
+  var profiles = data.val();
+  var profile = profiles[key];
+  name.innerHTML=profile['Name'];
+  about.innerHTML=profile['About'];
+  age.innerHTML=profile['Age'];
+  country.innerHTML=profile['Country'];
+  scoreM.innerHTML=profile['ScoreM'];
+  scoreE.innerHTML=profile['ScoreE'];
+}
+btnBack.onclick = function(){
+const about = document.getElementById("about").innerHTML;
+const age = document.getElementById("age").innerHTML;
+const country = document.getElementById("country").innerHTML;
+const name = document.getElementById("name").innerHTML;
+const scoreM = document.getElementById("score1").innerHTML;
+const scoreE = document.getElementById("score2").innerHTML;
+firebase.database().ref('Profiles/' + key).set({
+	Email: firebase.auth().currentUser.email,
+	Name: name,
+	ScoreM: scoreM,
+	ScoreE: scoreE,
+	About: about,
+	Age: age,
+	Country: country
+});
+location.href='Signed.html';
+};
+}
 	else {
 		console.log('not logged in');
 	}
