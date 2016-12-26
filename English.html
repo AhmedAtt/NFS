@@ -12,7 +12,7 @@
       <h3 id="Score">Score:0</h3>
   </div>
 
-  <div style="text-align: center;"><IMG SRC="apple.png" id="QuestionImg" ALT="image"></div>
+  <div style="text-align: center;"><IMG SRC="Images\apple.png" id="QuestionImg" ALT="image"></div>
   <div class= "Choices">
   <button type="radio" id="Choice_1" onclick=ButtonAction(this)>Choice 1</button>
   <button type="radio" id="Choice_2" onclick=ButtonAction(this)>Choice 2</button>
@@ -68,6 +68,7 @@ return true;
 //Main===================================
 Images=["aeroplane.png","apple.png","bus.png","carrot.png","eagle.png","elephant.png","giraffe.png","lion.png","onion.png","parrot.png","pigeon.png",
 "pineapple.png","tiger.png","tomato.png"];
+ImagesDir="Images/";
 Buttons=[document.getElementById("Choice_1"),document.getElementById("Choice_2"),document.getElementById("Choice_3"),document.getElementById("Choice_4")];
 Correct_Answer=0;
 Wrong_Answer=0;
@@ -98,7 +99,7 @@ function NewSession(){
 Rand_imageno=Math.floor(Math.random() * Images.length);
 
 console.log(Rand_imageno);
-document.getElementById("QuestionImg").src=Images[Rand_imageno];
+document.getElementById("QuestionImg").src=ImagesDir+Images[Rand_imageno];
 var Choices=[];
 
 
