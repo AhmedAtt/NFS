@@ -7,7 +7,7 @@
 </head>
 
 <body>
-  <button> Back</button>
+  <a href="Hoba" id="backAnchor"><button  href="ayhaga"> Back</button></a>
   <div style = "text-align: right";>
       <h3 id="Score">Score:0</h3>
   </div>
@@ -88,8 +88,12 @@ NewSession();
 
 
 function NewSession(){
-  if(Correct_Answer+Wrong_Answer==10){
+  if(Images.length==4){
+    // Here is where the game ends
     alert("You achieved a total of "+ Correct_Answer+" correct out of "+ (Wrong_Answer+Correct_Answer)+"!");
+    //TODO add the code here to add the correct answers to the DB.
+    //Correct_Answer = the final variable
+    location.href=document.getElementById("backAnchor").href;
   }
 
   for (i in Buttons){
