@@ -72,12 +72,13 @@
         if (element.innerHTML == answer) {
             console.log("correct");
             Correct_Answer += 1;
+            Images.splice(Rand_imageno, 1);
         } else {
             console.log("wrong");
             Wrong_Answer++;
 
         }
-        Images.splice(Rand_imageno, 1);
+
         document.getElementById("Score").innerHTML = "Score:" + Correct_Answer;
         NewSession();
     }
@@ -105,9 +106,9 @@
 
 
     //Main===================================
-    Images = ["aeroplane.png", "apple.png", "bus.png", "carrot.png", "eagle.png", "elephant.png", "giraffe.png", "lion.png", "onion.png", "parrot.png", "pigeon.png",
-        "pineapple.png", "tiger.png", "tomato.png"
-    ];
+    Images=["aeroplane.png","apple.png","bus.png","carrot.png","eagle.png","elephant.png","giraffe.png","lion.png","onion.png","parrot.png","pigeon.png",
+    "pineapple.png","tiger.png","tomato.png","nurse.png","teacher.png","pilot.png","police.png","firefighter.png","farmer.png","doctor.png","cat.png",
+    "dog.png","camel.png","goat.png","horse.png","duck.png","peacock.png","woodpecker.png","ostrich.png","duck.png"];
     ImagesDir = "Images/";
     Buttons = [document.getElementById("Choice_1"), document.getElementById("Choice_2"), document.getElementById("Choice_3"), document.getElementById("Choice_4")];
     Correct_Answer = 0;
@@ -117,7 +118,10 @@
     function NewSession() {
         if (Images.length == 4) {
             // Here is where the game ends
-            alert("You achieved a total of " + Correct_Answer + " correct out of " + (Wrong_Answer + Correct_Answer) + "!");
+            for(i in Buttons){
+            Buttons[i].style.display="none";
+              }
+            alert("You scored a total of " + Correct_Answer + " correct in " + (Wrong_Answer + Correct_Answer) + "attempt!");
             //TODO add the code here to add the correct answers to the DB.
             //Correct_Answer = the final variable
             //location.href=document.getElementById("backAnchor").href;
