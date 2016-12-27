@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+<title>English Game</title>
+<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
+
+</head>
+
+<body>
+ <button id="back"> Back</button>
+  <div style = "text-align: right";>
+      <h3 id="Score">Score:0</h3>
+  </div>
+
+  <div style="text-align: center;"><IMG SRC="Images\apple.png" id="QuestionImg" ALT="image"></div>
+  <div class= "Choices">
+  <button type="radio" id="Choice_1" onclick=ButtonAction(this)>Choice 1</button>
+  <button type="radio" id="Choice_2" onclick=ButtonAction(this)>Choice 2</button>
+  <button type="radio" id="Choice_3" onclick=ButtonAction(this)>Choice 3</button>
+  <button type="radio" id="Choice_4" onclick=ButtonAction(this)>Choice 4</button>
+  </div>
+</body>
+
+<script>
+
+    // Initialize Firebase
+    var config = {
+    apiKey: "AIzaSyDzWxlbKReTJQyvad5DLBJ6je5e4IDpUVQ",
+    authDomain: "agile-30622.firebaseapp.com",
+    databaseURL: "https://agile-30622.firebaseio.com",
+    storageBucket: "agile-30622.appspot.com",
+    messagingSenderId: "592891433441"
+  };
+  firebase.initializeApp(config);
+
+function fixEmail(email) {
+      if (!email) return false
+     email = email.toLowerCase();
+     email = email.replace(/\./g, ',');
+     return email;
+}
+
+function ButtonAction(element){
+  var answer=Images[Rand_imageno].substring(0,Images[Rand_imageno].length-4); //4= number of choices
+
+if(element.innerHTML ==answer ){
+  console.log("correct");
+  Correct_Answer+=1;
+}
+else{
+  console.log("wrong");
+  Wrong_Answer++;
+
+}
+    Images.splice(Rand_imageno,1);
+    document.getElementById("Score").innerHTML="Score:"+Correct_Answer;
+    NewSession();
+}
+
+function swap(array,fst,snd){
+  var temp =array[fst];
+  array[fst]=array[snd];
+  array[snd]=temp;
+}
+function CheckRandValidation(Randnumber,Imageno,Choices){
+  if(Randnumber==Imageno){
+    return false;
+  }
+  else{
+  for(counter in Choices){
+    if(Choices[counter]==Randnumber)
+    return false;
+  }
+}
+return true;
+}
+
+
+
+
+
+//Main===================================
+Images=["aeroplane.png","apple.png","bus.png","carrot.png","eagle.png","elephant.png","giraffe.png","lion.png","onion.png","parrot.png","pigeon.png",
+"pineapple.png","tiger.png","tomato.png"];
+ImagesDir="Images/";
+Buttons=[document.getElementById("Choice_1"),document.getElementById("Choice_2"),document.getElementById("Choice_3"),document.getElementById("Choice_4")];
+Correct_Answer=0;
+Wrong_Answer=0;
+NewSession();
+
+function NewSession(){
+  if(Images.length==4){
+    // Here is where the game ends
+    alert("You achieved a total of "+ Correct_Answer+" correct out of "+ (Wrong_Answer+Correct_Answer)+"!");
+    //TODO add the code here to add the correct answers to the DB.
+    //Correct_Answer = the final variable
+    //location.href=document.getElementById("backAnchor").href;
+  }
+
+  for (i in Buttons){
+    Buttons[i].style.backgroundColor='';
+  }
+
+Rand_imageno=Math.floor(Math.random() * Images.length);
+
+console.log(Rand_imageno);
+document.getElementById("QuestionImg").src=ImagesDir+Images[Rand_imageno];
+var Choices=[];
+
+
+var rand_choice1;
+do{
+rand_choice1=Math.floor(Math.random() * Images.length);
+}
+while(!CheckRandValidation(rand_choice1,Rand_imageno,Choices));
+//console.log(rand_choice1);
+Choices.push(rand_choice1);
+
+
+var rand_choice2;
+do{
+rand_choice2=Math.floor(Math.random() * Images.length);
+}
+while(!CheckRandValidation(rand_choice2,Rand_imageno,Choices));
+//console.log(rand_choice2);
+Choices.push(rand_choice2);
+
+
+var rand_choice3;
+do{
+rand_choice3=Math.floor(Math.random() * Images.length);
+}
+while(!CheckRandValidation(rand_choice3,Rand_imageno,Choices));
+//console.log(rand_choice3);
+Choices.push(rand_choice3);
+
+
+Choices.push(Rand_imageno);
+swap(Choices,Math.floor(Math.random() * (Choices.length)),Choices.length-1);
+
+
+var str=Images[Choices[0]];
+document.getElementById("Choice_1").innerHTML=str.substring(0, str.length - 4);
+
+str=Images[Choices[1]];
+document.getElementById("Choice_2").innerHTML=str.substring(0, str.length - 4);
+
+str=Images[Choices[2]];
+document.getElementById("Choice_3").innerHTML=str.substring(0, str.length - 4);
+
+str=Images[Choices[3]];
+document.getElementById("Choice_4").innerHTML=str.substring(0, str.length - 4);
+
+}
+
+var oldScore = 0;
+var namep;
+var scoreMp;
+var countryp;
+var aboutp;
+var agep;
+
+var profileRef = firebase.database().ref('Profiles'); //Create Profile object
+    firebase.auth().onAuthStateChanged(firebaseUser =>{
+    if(firebaseUser){
+         console.log(firebaseUser);
+         const key = fixEmail(firebase.auth().currentUser.email);
+         profileRef.on("value",gotData,errData);
+         function errData(error) {
+         console.log("Something went wrong.");
+         console.log(error);
+    }
+    function gotData(data){
+         var profiles = data.val();
+         var profile = profiles[key];
+         namep=profile['Name'];
+         aboutp=profile['About'];
+         agep=profile['Age'];
+         countryp=profile['Country'];
+         scoreMp=profile['ScoreM'];
+         oldScore=profile['ScoreE'];
+       }
+
+       document.getElementById('back').onclick = function(){
+        var finalScore =Correct_Answer;
+        var newScore = Number(parseInt(oldScore) + finalScore);
+         firebase.database().ref('Profiles/' + key).set({
+         Email: firebase.auth().currentUser.email,
+         Name: namep,
+         ScoreM: scoreMp,
+         ScoreE: newScore,
+         About: aboutp,
+         Age: agep,
+         Country: countryp
+       });
+         location.href='Signed.html'
+    };
+    }
+    else {
+        console.log('not logged in');
+    }
+    });
+
+
+</script>
+</html>

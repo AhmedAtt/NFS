@@ -2,7 +2,9 @@
 
 <head>
     <title>MathGame</title>
-    	<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
+    <meta charset="utf-8">
+    <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
+
     <style>
         .Game {
             background-color: Teal;
@@ -36,143 +38,226 @@
                 <button type="button" class="game_button" name="button" id="btn_choice1">####</button>
                 <button type="button" class="game_button" name="button" id="btn_choice2">####</button><br>
                 <button type="button" class="game_button" name="button" id="btn_choice3">####</button>
-                <button type="button" class="game_button" name="button" id="btn_choice4">####</button>
+                <button type="button" class="game_button" name="button" id="btn_choice4">####</button><br>
+
+
+                <button type="button" name="button" id="btn_mainMenu">Main Menu</button>
+
             </div>
 
         </form>
 
     </div>
     <script type="text/javascript">
-        var op1 = Math.floor((Math.random() * 10 + 1));
-        document.getElementById('lbl_op1').innerHTML = op1;
-
-        var op2 = Math.floor((Math.random() * 10 + 1));
-        document.getElementById('lbl_op2').innerHTML = op2;
-
-
-        var opCode = Math.floor((Math.random() * 3 + 1));
-        var opSign;
-        switch (opCode) {
-            case 1:
-                opSign = '+';
-                break;
-            case 2:
-                opSign = '-';
-                break;
-            case 3:
-                opSign = '*';
-                break;
-
-            default:
-                opSign = '+';
-        }
-        document.getElementById('lbl_operation').innerHTML = opSign;
-        //Calculating Correct Value
+    // Initialize Firebase
+    var config = {
+    apiKey: "AIzaSyDzWxlbKReTJQyvad5DLBJ6je5e4IDpUVQ",
+    authDomain: "agile-30622.firebaseapp.com",
+    databaseURL: "https://agile-30622.firebaseio.com",
+    storageBucket: "agile-30622.appspot.com",
+    messagingSenderId: "592891433441"
+  };
+  firebase.initializeApp(config);
         var result = "";
-        switch (opCode) {
-            case 1:
-                result = op1 + op2;
-                break;
-            case 2:
-                result = op1 - op2;
-                break;
-            case 3:
-                result = op1 * op2;
-                break;
-        }
-        //Creating and Assigning buttons
+        function fixEmail(email) {
+      if (!email) return false
+     email = email.toLowerCase();
+     email = email.replace(/\./g, ',');
+     return email;
+}
 
-        var btnChoice = Math.floor((Math.random() * 4 + 1));
-        var visChoice = 0;
-        switch (btnChoice) {
-            case 1:
-                document.getElementById('btn_choice1').innerHTML = result;
-                visChoice = 1;
-                break;
-            case 2:
-                document.getElementById('btn_choice2').innerHTML = result;
-                visChoice = 2;
-                break;
-            case 3:
-                document.getElementById('btn_choice3').innerHTML = result;
-                visChoice = 3;
-                break;
-            case 4:
-                visChoice = 4;
-                document.getElementById('btn_choice4').innerHTML = result;
-                break;
-        }
-        var rand1 = Math.floor((Math.random() * 10 + 1)) + result;
-        var rand2 = result - Math.floor((Math.random() * 10 + 1));
-        var rand3 = Math.floor((Math.random() * 10 + 1)) + result;
-        console.log(visChoice);
-        switch (visChoice) {
-            case 1:
-                document.getElementById('btn_choice2').innerHTML = rand1
-                document.getElementById('btn_choice3').innerHTML = rand2;
-                document.getElementById('btn_choice4').innerHTML = rand3;
-                console.log("Hello1");
-                break;
-            case 2:
-                document.getElementById('btn_choice1').innerHTML = rand1
-                document.getElementById('btn_choice3').innerHTML = rand2;
-                document.getElementById('btn_choice4').innerHTML = rand3;
-                console.log("Hello2");
-                break;
-            case 3:
-                document.getElementById('btn_choice1').innerHTML = rand1
-                document.getElementById('btn_choice2').innerHTML = rand2;
-                document.getElementById('btn_choice4').innerHTML = rand3;
-                console.log("Hello3");
-                break;
-            case 4:
-                document.getElementById('btn_choice1').innerHTML = rand1
-                document.getElementById('btn_choice2').innerHTML = rand2;
-                document.getElementById('btn_choice3').innerHTML = rand3;
-                console.log("Hello4");
+        generateQuestion();
+
+        function generateQuestion() {
+            document.getElementById('lbl_result').innerHTML="";
+            var op1 = Math.floor((Math.random() * 10 + 1));
+            document.getElementById('lbl_op1').innerHTML = op1;
+
+            var op2 = Math.floor((Math.random() * 10 + 1));
+            document.getElementById('lbl_op2').innerHTML = op2;
 
 
-                break;
+            var opCode = Math.floor((Math.random() * 3 + 1));
+            var opSign;
+            switch (opCode) {
+                case 1:
+                    opSign = '+';
+                    break;
+                case 2:
+                    opSign = '-';
+                    break;
+                case 3:
+                    opSign = '*';
+                    break;
+
+                default:
+                    opSign = '+';
+            }
+            document.getElementById('lbl_operation').innerHTML = opSign;
+            //Calculating Correct Value
+
+            switch (opCode) {
+                case 1:
+                    result = op1 + op2;
+                    break;
+                case 2:
+                    result = op1 - op2;
+                    break;
+                case 3:
+                    result = op1 * op2;
+                    break;
+            }
+            //Creating and Assigning buttons
+
+            var btnChoice = Math.floor((Math.random() * 4 + 1));
+            var visChoice = 0;
+            switch (btnChoice) {
+                case 1:
+                    document.getElementById('btn_choice1').innerHTML = result;
+                    visChoice = 1;
+                    break;
+                case 2:
+                    document.getElementById('btn_choice2').innerHTML = result;
+                    visChoice = 2;
+                    break;
+                case 3:
+                    document.getElementById('btn_choice3').innerHTML = result;
+                    visChoice = 3;
+                    break;
+                case 4:
+                    visChoice = 4;
+                    document.getElementById('btn_choice4').innerHTML = result;
+                    break;
+            }
+            var rand1 = Math.floor((Math.random() * 10 + 1)) + result;
+            var rand2 = result - Math.floor((Math.random() * 10 + 1));
+            var rand3 = Math.floor((Math.random() * 10 + 1)) + result;
+          //  console.log(visChoice);
+            switch (visChoice) {
+                case 1:
+                    document.getElementById('btn_choice2').innerHTML = rand1
+                    document.getElementById('btn_choice3').innerHTML = rand2;
+                    document.getElementById('btn_choice4').innerHTML = rand3;
+
+                    break;
+                case 2:
+                    document.getElementById('btn_choice1').innerHTML = rand1
+                    document.getElementById('btn_choice3').innerHTML = rand2;
+                    document.getElementById('btn_choice4').innerHTML = rand3;
+
+                    break;
+                case 3:
+                    document.getElementById('btn_choice1').innerHTML = rand1
+                    document.getElementById('btn_choice2').innerHTML = rand2;
+                    document.getElementById('btn_choice4').innerHTML = rand3;
+
+                    break;
+                case 4:
+                    document.getElementById('btn_choice1').innerHTML = rand1
+                    document.getElementById('btn_choice2').innerHTML = rand2;
+                    document.getElementById('btn_choice3').innerHTML = rand3;
+
+
+
+                    break;
+            }
+
         }
+
+        //score calculation and onclick events
+        var score = 0;
 
         document.getElementById('btn_choice1').onclick = function() {
             document.getElementById('lbl_result').innerHTML = document.getElementById('btn_choice1').innerHTML;
             if (result == document.getElementById('btn_choice1').innerHTML) {
                 alert("Correct");
+                score++;
+                alert("Score : " + score);
             } else {
                 alert("False");
+                alert("Score : " + score);
             }
-
+            generateQuestion();
         }
         document.getElementById('btn_choice2').onclick = function() {
             document.getElementById('lbl_result').innerHTML = document.getElementById('btn_choice2').innerHTML;
             if (result == document.getElementById('btn_choice2').innerHTML) {
                 alert("Correct");
+                score++;
+                alert("Score : " + score);
             } else {
                 alert("False");
+                alert("Score : " + score);
             }
 
+            generateQuestion();
         }
         document.getElementById('btn_choice3').onclick = function() {
             document.getElementById('lbl_result').innerHTML = document.getElementById('btn_choice3').innerHTML;
             if (result == document.getElementById('btn_choice3').innerHTML) {
                 alert("Correct");
+                score++;
+                alert("Score : " + score);
             } else {
                 alert("False");
+                alert("Score : " + score);
             }
-
+            generateQuestion();
         }
         document.getElementById('btn_choice4').onclick = function() {
             document.getElementById('lbl_result').innerHTML = document.getElementById('btn_choice4').innerHTML;
             if (result == document.getElementById('btn_choice4').innerHTML) {
                 alert("Correct");
+                score++;
+                alert("Score : " + score);
             } else {
                 alert("False");
+                alert("Score : " + score);
             }
-
+            generateQuestion();
         }
+    var profileRef = firebase.database().ref('Profiles'); //Create Profile object
+    firebase.auth().onAuthStateChanged(firebaseUser =>{
+    if(firebaseUser){
+         console.log(firebaseUser);
+         const key = fixEmail(firebase.auth().currentUser.email);
+         profileRef.on("value",gotData,errData);
+         function errData(error) {
+         console.log("Something went wrong.");
+         console.log(error);
+    }
+    function gotData(data){
+         var profiles = data.val();
+         var profile = profiles[key];
+         namep=profile['Name'];
+         aboutp=profile['About'];
+         agep=profile['Age'];
+         countryp=profile['Country'];
+         oldScore=profile['ScoreM'];
+         scoreEp=profile['ScoreE'];
+    }
+        document.getElementById('btn_mainMenu').onclick = function() {
+          var finalScore =score;
+          var newScore = Number(parseInt(oldScore) + finalScore);
+           firebase.database().ref('Profiles/' + key).set({
+         Email: firebase.auth().currentUser.email,
+         Name: namep,
+         ScoreM: newScore,
+         ScoreE: scoreEp,
+         About: aboutp,
+         Age: agep,
+         Country: countryp
+    });
+
+          location.href='Signed.html';
+        };
+    }
+    else {
+        console.log('not logged in');
+    }
+    });
     </script>
-<script src="JavaScript/Signed.js"></script>
+
 </body>
 
 </html>
